@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Responsive design for all devices */
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
+  text-size-adjust: none;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: hsl(248, 100%, 99%);
+}
+
+/* Responsive container system */
+#root {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Responsive layout containers */
+.responsive-container {
+  width: 100%;
+  max-width: 430px; /* Mobile */
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+/* Desktop/Laptop optimization */
+@media screen and (min-width: 768px) {
+  .responsive-container {
+    max-width: 768px; /* Tablet */
+    border-radius: 24px;
+    margin: 20px auto;
+    min-height: calc(100vh - 40px);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .responsive-container {
+    max-width: 1024px; /* Desktop */
+    padding: 40px;
+    margin: 20px auto;
+  }
+  
+  /* Desktop grid layouts for specific sections */
+  .desktop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .responsive-container {
+    max-width: 1200px; /* Large desktop */
+    gap: 60px;
+    padding: 60px;
+  }
+}
+
+/* Force mobile layout on small screens */
+@media screen and (max-width: 480px) {
+  .responsive-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+  }
+}
+
+/* Hero section responsive */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 16rem;
+  width: 100%;
+}
+
+@media screen and (max-width: 640px) {
+  .hero-section {
+    min-height: 14rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .hero-section {
+    min-height: 20rem;
+  }
+}
+
+:root {
+  --background: hsl(248, 100%, 99%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(241, 100%, 70%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(273, 71%, 56%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(163, 94%, 43%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  --text-gray: hsl(215, 20.2%, 65.1%);
+  --bg-soft: hsl(248, 100%, 99%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(241, 100%, 70%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(273, 71%, 56%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(163, 94%, 43%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+  --text-gray: hsl(215, 20.2%, 45.1%);
+  --bg-soft: hsl(240, 10%, 3.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .progress-ring {
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
+  
+  .progress-ring-fill {
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 251.2;
+    transition: stroke-dashoffset 0.5s ease-in-out;
+  }
+  
+  .audio-wave {
+    animation: wave 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes wave {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(1.5); }
+  }
+  
+  .journal-card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-pulse-gentle {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-dissolve {
+    animation: dissolve 2s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    0% { transform: translateY(10px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes dissolve {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.8); }
+  }
+}
