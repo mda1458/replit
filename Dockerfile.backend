@@ -13,10 +13,12 @@ COPY server/ ./server/
 COPY shared/ ./shared/
 COPY tsconfig.json ./
 COPY drizzle.config.ts ./
-COPY docker-entrypoint.sh ./
 
-# Make entrypoint executable
-RUN chmod +x docker-entrypoint.sh
+# Copy and prepare entrypoint script
+COPY docker-entrypoint.sh ./
+RUN chmod +x docker-entrypoint.sh && \
+    # Convert Windows line endings to Unix if needed
+    sed -i 's/\r$//' docker-entrypoint.sh
 
 # Install TypeScript and build tools
 RUN npm install -g tsx typescript esbuild
@@ -37,4 +39,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:5000/api/health || exit 1
 
 # Start the application
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "./docker-entrypoint.sh"]
