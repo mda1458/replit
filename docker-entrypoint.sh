@@ -14,7 +14,7 @@ echo "✅ Database is ready!"
 
 # Run database migrations
 echo "🔄 Running database migrations..."
-npm run db:push
+npx drizzle-kit push
 
 # Start the application
 echo "🎯 Starting Forgiveness Journey backend..."

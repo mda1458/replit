@@ -19,7 +19,7 @@ COPY docker-entrypoint.sh ./
 RUN chmod +x docker-entrypoint.sh
 
 # Install TypeScript and build tools
-RUN npm install -g tsx typescript
+RUN npm install -g tsx typescript esbuild
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \

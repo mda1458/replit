@@ -67,8 +67,7 @@ services:
       - backend
     networks:
       - forgiveness-network
-    volumes:
-      - ./client/dist:/usr/share/nginx/html:ro
+# Remove this volume mount - using built-in files
 
   nginx:
     image: nginx:alpine
