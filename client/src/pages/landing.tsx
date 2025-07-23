@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PrivacyPolicyCheckbox from "@/components/PrivacyPolicyCheckbox";
 import { Heart, ArrowRight, Star, Shield, Users, Download, Crown } from "lucide-react";
-import logoImage from "@assets/Yellow Brick Road_1752853068713.jpeg";
+// Using SVG logo instead of image file for Docker compatibility
+const logoImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23f59e0b'/%3E%3Cpath d='M30 60 Q50 30 70 60 Q50 50 30 60' fill='%23fbbf24'/%3E%3C/svg%3E";
 
 export default function Landing() {
   const [privacyAccepted, setPrivacyAccepted] = useState(false);

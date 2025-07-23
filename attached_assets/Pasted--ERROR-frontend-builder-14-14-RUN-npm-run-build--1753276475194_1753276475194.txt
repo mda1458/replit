@@ -1,0 +1,30 @@
+ => ERROR [frontend builder 14/14] RUN npm run build                                                                  6.6s
+------                                                                                                                     
+ > [frontend builder 14/14] RUN npm run build:                                                                             
+0.326                                                                                                                      
+0.326 > rest-express@1.0.0 build                                                                                           
+0.326 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist      
+0.326                                                                                                                      
+0.510 vite v5.4.19 building for production...
+0.550 transforming...
+0.740 Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+0.740   npx update-browserslist-db@latest
+0.740   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+5.799 ✓ 2570 modules transformed.
+6.225 rendering chunks...
+6.244 computing gzip size...
+6.268 ../dist/public/index.html                                                1.58 kB │ gzip:   0.84 kB
+6.268 ../dist/public/assets/Yellow Brick Road_1752853068713-DtBACoBS.jpeg  1,789.17 kB
+6.268 ../dist/public/assets/index-DCeGypZI.css                                83.68 kB │ gzip:  14.16 kB
+6.268 ../dist/public/assets/index-yDYu-nyv.js                              1,035.21 kB │ gzip: 280.48 kB
+6.268 
+6.268 (!) Some chunks are larger than 500 kB after minification. Consider:
+6.268 - Using dynamic import() to code-split the application
+6.268 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+6.268 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+6.268 ✓ built in 5.74s
+6.320 ✘ [ERROR] The entry point "server/index.ts" cannot be marked as external
+6.320 
+6.321 1 error
+------
+failed to solve: process "/bin/sh -c npm run build" did not complete successfully: exit code: 1

@@ -6,7 +6,7 @@ echo "🚀 Starting Forgiveness Journey Production Deployment..."
 
 # Wait for database to be ready
 echo "⏳ Waiting for database to be ready..."
-until pg_isready -h database -p 5432 -U forgiveness_user -d forgiveness_journey; do
+until PGPASSWORD="$DB_PASSWORD" pg_isready -h database -p 5432 -U forgiveness_user -d forgiveness_journey; do
   echo "Database is unavailable - sleeping for 2 seconds"
   sleep 2
 done
