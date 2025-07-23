@@ -14,11 +14,31 @@ COPY shared/ ./shared/
 COPY tsconfig.json ./
 COPY drizzle.config.ts ./
 
-# Copy and prepare entrypoint script
-COPY docker-entrypoint.sh ./
-RUN chmod +x docker-entrypoint.sh && \
-    # Convert Windows line endings to Unix if needed
-    sed -i 's/\r$//' docker-entrypoint.sh
+# Create entrypoint script directly in Dockerfile to avoid file issues
+RUN cat > /app/start.sh << 'EOF'
+#!/bin/bash
+set -e
+echo "Starting Forgiveness Journey Production Deployment..."
+echo "Working directory: $(pwd)"
+
+# Wait for database to be ready
+echo "Waiting for database to be ready..."
+until PGPASSWORD="$DB_PASSWORD" pg_isready -h database -p 5432 -U forgiveness_user -d forgiveness_journey; do
+  echo "Database is unavailable - sleeping for 2 seconds"
+  sleep 2
+done
+echo "Database is ready!"
+
+# Run database migrations
+echo "Running database migrations..."
+npx drizzle-kit push
+
+# Start the application
+echo "Starting Forgiveness Journey backend..."
+exec tsx server/index.ts
+EOF
+
+RUN chmod +x /app/start.sh
 
 # Install TypeScript and build tools
 RUN npm install -g tsx typescript esbuild
@@ -39,4 +59,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD wget --no-verbose --tries=1 --spider http://localhost:5000/api/health || exit 1
 
 # Start the application
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["/app/start.sh"]
