@@ -1,8 +1,8 @@
-import express, { type Request, Response, NextFunction } from "express";
+import express, { NextFunction, type Request, Response } from "express";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
-import { createSampleGroupSessions } from "./sampleGroupSessions";
 import { createSampleFacilitators } from "./sampleFacilitators";
+import { createSampleGroupSessions } from "./sampleGroupSessions";
+import { log, serveStatic, setupVite } from "./vite";
 
 // Force version v2025.01.19.v3 deployment - Privacy Policy & AI Consent
 console.log('🚀 Starting Forgiveness Journey v2025.01.19.v3 with Privacy Features');

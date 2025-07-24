@@ -1,0 +1,52 @@
+# Custom PostgreSQL Dockerfile for Forgiveness Journey
+FROM postgres:15-alpine
+
+# Set timezone
+ENV TZ=UTC
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Install additional tools
+RUN apk add --no-cache \
+    postgresql-contrib \
+    curl \
+    wget
+
+# Create directories for custom configuration
+RUN mkdir -p /etc/postgresql \
+    && mkdir -p /var/log/postgresql \
+    && mkdir -p /docker-entrypoint-initdb.d/
+
+# Copy custom PostgreSQL configuration
+COPY postgresql.conf /etc/postgresql/postgresql.conf
+COPY pg_hba.conf /etc/postgresql/pg_hba.conf
+
+# Copy database initialization scripts
+COPY init-db.sql /docker-entrypoint-initdb.d/01-init.sql
+COPY setup-extensions.sql /docker-entrypoint-initdb.d/02-extensions.sql
+
+# Create custom entrypoint script
+COPY docker-entrypoint-db.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint-db.sh
+
+# Set ownership and permissions
+RUN chown -R postgres:postgres /var/lib/postgresql \
+    && chown -R postgres:postgres /var/log/postgresql \
+    && chown -R postgres:postgres /etc/postgresql
+
+# Health check script
+COPY healthcheck-db.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/healthcheck-db.sh
+
+# Switch to postgres user
+USER postgres
+
+# Expose PostgreSQL port
+EXPOSE 5432
+
+# Custom health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD /usr/local/bin/healthcheck-db.sh
+
+# Use custom entrypoint
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint-db.sh"]
+CMD ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf"]
